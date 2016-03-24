@@ -1,5 +1,5 @@
 extern crate linal;
-use linal::{Vec2, Cross};
+use linal::{Vec2, Cross, dual_basis};
 
 fn main() {
     // initialize two dimension vector
@@ -19,6 +19,11 @@ fn main() {
     println!("Vec2::zero() = ({})", Vec2::zero());
     // transformation from the polar coordinate system
     println!("from_polar({}, {}) = ({})", r, theta, Vec2::from_polar(r, theta));
+    // construct dual basis
+    let a1 = Vec2::new(2.0, 0.0);
+    let a2 = Vec2::new(3.0, 4.0);
+    let (b1, b2) = dual_basis((a1, a2));
+    println!("dual_basis(({}), ({})) = (({}), ({}))", a1, a2, b1, b2);
     // scalar production
     println!("<({}), ({})> = {}", a, b, a.dot(b));
     // ...

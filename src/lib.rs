@@ -32,10 +32,7 @@ impl Vec2 {
     }
     /// Constructs a new `Vec2` from polar coordinates $(r, \theta)$.
     pub fn from_polar(r: f64, theta: f64) -> Vec2 {
-        Vec2 {
-            x: r * f64::cos(theta),
-            y: r * f64::sin(theta),
-        }
+        Vec2::new(r * f64::cos(theta), r * f64::sin(theta))
     }
     /// Create a zero `Vec2`
     pub fn zero() -> Vec2 {
@@ -69,7 +66,7 @@ impl Vec2 {
 ///
 /// # Example
 /// ```
-/// use linalg::{Vec2, dual_basis};
+/// use linal::{Vec2, dual_basis};
 ///
 /// let a1 = Vec2::new(2.0, 0.0);
 /// let a2 = Vec2::new(3.0, 4.0);
@@ -142,7 +139,7 @@ impl Point {
     /// #Examples
     ///
     /// ```
-    /// use linalg::Point;
+    /// use linal::Point;
     /// // ..
     /// // create `Point` with coords (1.5, 3.4)
     /// let a: Point = Point::new(1.5, 3.4);
@@ -154,17 +151,14 @@ impl Point {
     }
     /// Constructs a new `Point` from polar coordinates $(r, \theta)$.
     pub fn from_polar(r: f64, theta: f64) -> Point {
-        Point {
-            x: r * f64::cos(theta),
-            y: r * f64::sin(theta),
-        }
+        Point::new(r * f64::cos(theta), r * f64::sin(theta))
     }
     /// Constructs a zero `Point`
     ///
     /// #Examples
     ///
     /// ```
-    /// use linalg::Point;
+    /// use linal::Point;
     /// // ...
     /// // create a zero `Point`
     /// let a = Point::zero();
@@ -377,5 +371,11 @@ mod linalg_test {
     fn vector_parse() {
         let a: Vec2 = "1 2".parse().unwrap();
         assert_eq!(a, Vec2::new(1.0, 2.0));
+    }
+
+    #[test]
+    fn point_parse() {
+        let a: Point = "1 2".parse().unwrap();
+        assert_eq!(a, Point::new(1.0, 2.0));
     }
 }
