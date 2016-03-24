@@ -39,8 +39,8 @@ impl Vec2 {
         Vec2::new(0.0, 0.0)
     }
     /// Scalar product
-    pub fn dot(self, b: Vec2) -> f64 {
-        self.x * b.x + self.y * b.y
+    pub fn dot(self, rhs: Vec2) -> f64 {
+        self.x * rhs.x + self.y * rhs.y
     }
     /// Vector length
     pub fn len(self) -> f64 {
@@ -51,11 +51,11 @@ impl Vec2 {
         self / self.len()
     }
     /// Squares of the vector coordinates
-    pub fn sqr(&self) -> Vec2 {
-        Vec2::new(self.x.powi(2), self.y.powi(2))
+    pub fn sqr(self) -> Vec2 {
+        self * self
     }
     /// Square root of vector coordinates
-    pub fn sqrt(&self) -> Vec2 {
+    pub fn sqrt(self) -> Vec2 {
         Vec2::new(self.x.sqrt(), self.y.sqrt())
     }
 }
@@ -174,7 +174,7 @@ impl Point {
     pub fn from_vec2(v: Vec2) -> Point {
         Point::new(v.x, v.y)
     }
-    /// ?
+    /// Return radius-vector for 'Point'
     pub fn position(self) -> Vec2 {
         Vec2::new(self.x, self.y)
     }
