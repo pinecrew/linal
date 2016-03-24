@@ -33,11 +33,11 @@ fn main() {
     println!("({}).sqr() = ({})", a, a.sqr());
     // square root of vector coordinates
     println!("({}).sqrt() = ({})", b, b.sqrt());
-    // negative vector
+    // negative operation
     println!("({}).neg() = ({})", a, -a);
-    // equality
+    // equality operation
     println!("({}) == ({}) = {}", a, b, a == b);
     let vector = "3.5 2.8";
-    // read vector from string
+    // parse vector from string
     println!("{} --> ({})", vector, vector.parse::<Vec2>().unwrap());
 }

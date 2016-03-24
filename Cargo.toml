@@ -12,3 +12,6 @@ name = "linal"
 
 [[example]]
 name = "vector2"
+
+[[example]]
+name = "point"
