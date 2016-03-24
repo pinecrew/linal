@@ -3,7 +3,7 @@ language: rust
 script:
  - |
     cargo test --verbose &&
-    cargo build --verbose &&
+    cargo build --verbose
 #    cargo doc
 # after_success: sh scripts/travis-doc-upload.sh
 cache:
