@@ -1,4 +1,11 @@
 [package]
 name = "linal"
+description = "tiny linear algebra library without dependencies"
 version = "0.1.0"
 authors = ["Vova Abdrakhmanov <369565@gmail.com>", "Alexey Golubev <dr.freecx@gmail.com>"]
+repository = "https://github.com/pinecrew/linal"
+keywords = ["vectors", "linear", "algebra"]
+license = "BSD-3-Clause"
+
+[lib]
+name = "linal"
