@@ -9,3 +9,6 @@ license = "BSD-3-Clause"
 
 [lib]
 name = "linal"
+
+[[example]]
+name = "vector2"
