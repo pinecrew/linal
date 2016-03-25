@@ -53,6 +53,35 @@ impl Vec3 {
     }
 }
 
+/// Constructs dual basis for given.
+///
+/// Dual basis $(b_1, b_2)$ for basis $(a_1, a_2)$ satisfies relation
+/// $$a_i \cdot b_j = \delta_{ij}$$
+///
+/// # Example
+/// ```
+/// use linal::Vec3;
+/// use linal::vec3::dual_basis;
+///
+/// let a1 = Vec3::new(2.0, 0.0, 0.0);
+/// let a2 = Vec3::new(3.0, 4.0, 0.0);
+/// let a3 = Vec3::new(3.0, 4.0, 5.0);
+///
+/// let (b1, b2, b3) = dual_basis((a1, a2, a3));
+/// assert_eq!(b1, Vec3::new(0.5, -0.375, 0.0));
+/// assert_eq!(b2, Vec3::new(0.0, 0.25, -0.2));
+/// assert_eq!(b3, Vec3::new(0.0, 0.0, 0.2));
+/// ```
+pub fn dual_basis(basis: (Vec3, Vec3, Vec3)) -> (Vec3, Vec3, Vec3) {
+    let (a, b, c) = basis;
+    let triple_prod = a.cross(b).dot(c);
+
+    (b.cross(c) / triple_prod,
+     c.cross(a) / triple_prod,
+     a.cross(b) / triple_prod)
+}
+
+
 impl Add for Vec3 {
     type Output = Self;
 

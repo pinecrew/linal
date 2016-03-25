@@ -2,7 +2,7 @@ use std::ops::{Add, Sub, Mul, Div, Neg};
 use std::cmp::PartialEq;
 use std::str::FromStr;
 use std::fmt;
-use std::num;  
+use std::num;
 use traits::Cross;
 
 /// 2D vector in cartesian coordinates
@@ -11,7 +11,7 @@ pub struct Vec2 {
     /// component of vector
     pub x: f64,
     /// component of vector
-    pub y: f64
+    pub y: f64,
 }
 
 impl Vec2 {
@@ -55,7 +55,8 @@ impl Vec2 {
 ///
 /// # Example
 /// ```
-/// use linal::{Vec2, dual_basis};
+/// use linal::Vec2;
+/// use linal::vec2::dual_basis;
 ///
 /// let a1 = Vec2::new(2.0, 0.0);
 /// let a2 = Vec2::new(3.0, 4.0);
@@ -160,7 +161,7 @@ impl fmt::Display for Vec2 {
 
 impl FromStr for Vec2 {
     type Err = num::ParseFloatError;
-    fn from_str(s : &str) -> Result<Self, Self::Err> {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let words: Vec<&str> = s.split_whitespace().collect();
         let x: f64 = try!(words[0].parse());
         let y: f64 = try!(words[1].parse());
@@ -168,7 +169,7 @@ impl FromStr for Vec2 {
     }
 }
 
-#[cfg(test)] 
+#[cfg(test)]
 mod linal_test {
     use super::*;
     use traits::Cross;

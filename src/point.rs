@@ -1,5 +1,5 @@
 use std::ops::{Add, Sub, Neg};
-use std::cmp::PartialEq;    
+use std::cmp::PartialEq;
 use std::str::FromStr;
 use std::fmt;
 use std::num;
@@ -108,7 +108,7 @@ impl fmt::Display for Point {
 
 impl FromStr for Point {
     type Err = num::ParseFloatError;
-    fn from_str(s : &str) -> Result<Self, Self::Err> {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let words: Vec<&str> = s.split_whitespace().collect();
         let x: f64 = try!(words[0].parse());
         let y: f64 = try!(words[1].parse());
