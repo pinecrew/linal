@@ -158,9 +158,11 @@ mod linal_test {
     }
 
     #[test]
-    #[ignore]
     fn vec3_from_spherical() {
-        // need test
+        use std::f64::consts::PI;
+        let a = Vec3::from_spherical(5.0, PI / 2.0, 3f64.atan2(4.0));
+        let b = Vec3::new(4.0, 3.0, 0.0);
+        assert!((a - b).len() < 1e-10);
     }
 
     #[test]
