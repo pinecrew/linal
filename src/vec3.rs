@@ -13,7 +13,7 @@ pub struct Vec3 {
     /// component of vector
     pub y: f64,
     /// component of vector
-    pub z: f64
+    pub z: f64,
 }
 
 impl Vec3 {
@@ -23,11 +23,9 @@ impl Vec3 {
     }
     /// Constructs a new `Vec3` from spherical coordinates $(r, \theta, \phi)$.
     pub fn from_spherical(r: f64, theta: f64, phi: f64) -> Vec3 {
-        Vec3::new(
-            r * f64::sin(theta) * f64::cos(phi), 
-            r * f64::sin(theta) * f64::sin(phi),
-            r * f64::cos(theta)
-        )
+        Vec3::new(r * f64::sin(theta) * f64::cos(phi),
+                  r * f64::sin(theta) * f64::sin(phi),
+                  r * f64::cos(theta))
     }
     /// Create a zero `Vec3`
     pub fn zero() -> Vec3 {
@@ -106,6 +104,16 @@ impl Neg for Vec3 {
     }
 }
 
+impl Cross for Vec3 {
+    type Output = Self;
+
+    fn cross(self, rhs: Vec3) -> Self {
+        Self::new(self.y * rhs.z - self.z * rhs.y,
+                  self.z * rhs.x - self.x * rhs.z,
+                  self.x * rhs.y - self.y * rhs.x)
+    }
+}
+
 impl PartialEq for Vec3 {
     fn eq(&self, other: &Self) -> bool {
         self.x == other.x && self.y == other.y && self.z == other.z
@@ -120,7 +128,7 @@ impl fmt::Display for Vec3 {
 
 impl FromStr for Vec3 {
     type Err = num::ParseFloatError;
-    fn from_str(s : &str) -> Result<Self, Self::Err> {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let words: Vec<&str> = s.split_whitespace().collect();
         let x: f64 = try!(words[0].parse());
         let y: f64 = try!(words[1].parse());
@@ -129,10 +137,10 @@ impl FromStr for Vec3 {
     }
 }
 
-#[cfg(test)] 
+#[cfg(test)]
 mod linal_test {
     use super::*;
-    // use traits::Cross;
+    use traits::Cross;
 
     #[test]
     fn vec3_mul() {
@@ -181,15 +189,12 @@ mod linal_test {
     }
 
     #[test]
-    #[ignore]
     fn vec3_cross() {
-        // write test
-    }
-
-    #[test]
-    #[ignore]
-    fn vec3_cross_z() {
-        // write test
+        let a = Vec3::new(4.0, 0.0, 0.0);
+        let b = Vec3::new(3.0, 5.0, 0.0);
+        let c = Vec3::new(0.0, 0.0, 20.0);
+        assert_eq!(a.cross(b), c);
+        assert_eq!(b.cross(a), -c);
     }
 
     #[test]
