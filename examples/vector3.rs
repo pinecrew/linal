@@ -13,7 +13,7 @@ fn main() {
     // multiplication by a constant
     println!("({}) * {} = ({})", a, k, a * k);
     // division by a constant
-    println!("({}) / {} = ({})", b, k, b / n);
+    println!("({}) / {} = ({})", b, n, b / n);
     let (r, theta, phi) = (2.0, 1.57, 3.14);
     // initialize zero vector
     println!("Vec3::zero() = ({})", Vec3::zero());
@@ -35,9 +35,9 @@ fn main() {
              b1,
              b2,
              b3);
-    // scalar production
+    // scalar product
     println!("<({}), ({})> = {}", a, b, a.dot(b));
-    // ...
+    // cross product
     println!("({}).cross({}) = {}", a, b, a.cross(b));
     // vector length
     println!("({}).len() = {}", a, a.len());

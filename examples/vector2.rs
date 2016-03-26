@@ -13,7 +13,7 @@ fn main() {
     // multiplication by a constant
     println!("({}) * {} = ({})", a, k, a * k);
     // division by a constant
-    println!("({}) / {} = ({})", b, k, b / n);
+    println!("({}) / {} = ({})", b, n, b / n);
     let (r, theta) = (2.0, 3.14);
     // initialize zero vector
     println!("Vec2::zero() = ({})", Vec2::zero());
@@ -27,11 +27,11 @@ fn main() {
     let a2 = Vec2::new(3.0, 4.0);
     let (b1, b2) = Vec2::dual_basis((a1, a2));
     println!("dual_basis(({}), ({})) = (({}), ({}))", a1, a2, b1, b2);
-    // scalar production
+    // scalar product
     println!("<({}), ({})> = {}", a, b, a.dot(b));
-    // ...
+    // cross product
     println!("({}).cross({}) = {}", a, b, a.cross(b));
-    // ..
+    // cross product with orthogonal vector
     println!("({}).cross({}) = ({})", a, k, a.cross(k));
     // vector length
     println!("({}).len() = {}", a, a.len());
