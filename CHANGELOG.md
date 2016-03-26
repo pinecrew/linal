@@ -9,3 +9,4 @@
 * Add Vec3
 * Remove Point
 * Remove Cross trait, use `cross` and `area` methods for Vec2 and 'cross' for Vec3
+* Use Into<f64> trait instead f64
