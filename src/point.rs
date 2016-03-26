@@ -3,7 +3,6 @@ use std::cmp::PartialEq;
 use std::str::FromStr;
 use std::fmt;
 use std::num;
-use traits::Cross;
 use vec2::*;
 
 /// 2D point in cortesian coordinates
@@ -29,7 +28,10 @@ impl Point {
     /// println!("a = {}", a);
     /// ```
     pub fn new<I: Into<f64>>(x: I, y: I) -> Point {
-        Point { x: x.into(), y: y.into() }
+        Point {
+            x: x.into(),
+            y: y.into(),
+        }
     }
     /// Constructs a new `Point` from polar coordinates $(r, \theta)$.
     pub fn from_polar<I: Into<f64>>(r: I, theta: I) -> Point {

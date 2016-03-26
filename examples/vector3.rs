@@ -1,5 +1,5 @@
 extern crate linal;
-use linal::{Vec3, Cross};
+use linal::Vec3;
 
 fn main() {
     // initialize three dimension vector

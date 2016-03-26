@@ -3,7 +3,6 @@ use std::cmp::PartialEq;
 use std::str::FromStr;
 use std::fmt;
 use std::num;
-use traits::Cross;
 
 /// 3D vector in cartesian coordinates
 #[derive(Debug, Clone, Copy)]
@@ -19,7 +18,11 @@ pub struct Vec3 {
 impl Vec3 {
     /// Constructs a new `Vec3`.
     pub fn new<I: Into<f64>>(x: I, y: I, z: I) -> Vec3 {
-        Vec3 { x: x.into(), y: y.into(), z: z.into() }
+        Vec3 {
+            x: x.into(),
+            y: y.into(),
+            z: z.into(),
+        }
     }
     /// Constructs a new `Vec3` from spherical coordinates $(r, \theta, \phi)$.
     pub fn from_spherical<I: Into<f64>>(r: I, theta: I, phi: I) -> Vec3 {
@@ -35,6 +38,12 @@ impl Vec3 {
     /// Scalar product
     pub fn dot(self, rhs: Vec3) -> f64 {
         self.x * rhs.x + self.y * rhs.y + self.z * rhs.z
+    }
+    /// Cross product
+    pub fn cross(self, rhs: Vec3) -> Self {
+        Self::new(self.y * rhs.z - self.z * rhs.y,
+                  self.z * rhs.x - self.x * rhs.z,
+                  self.x * rhs.y - self.y * rhs.x)
     }
     /// Vector length
     pub fn len(self) -> f64 {
@@ -134,16 +143,6 @@ impl Neg for Vec3 {
     }
 }
 
-impl Cross for Vec3 {
-    type Output = Self;
-
-    fn cross(self, rhs: Vec3) -> Self {
-        Self::new(self.y * rhs.z - self.z * rhs.y,
-                  self.z * rhs.x - self.x * rhs.z,
-                  self.x * rhs.y - self.y * rhs.x)
-    }
-}
-
 impl PartialEq for Vec3 {
     fn eq(&self, other: &Self) -> bool {
         self.x == other.x && self.y == other.y && self.z == other.z
@@ -170,7 +169,6 @@ impl FromStr for Vec3 {
 #[cfg(test)]
 mod linal_test {
     use super::*;
-    use traits::Cross;
 
     #[test]
     fn vec3_mul() {
