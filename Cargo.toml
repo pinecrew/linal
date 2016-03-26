@@ -15,6 +15,3 @@ name = "vector2"
 
 [[example]]
 name = "vector3"
-
-[[example]]
-name = "point"
