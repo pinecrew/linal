@@ -18,11 +18,12 @@ pub struct Vec3 {
 
 impl Vec3 {
     /// Constructs a new `Vec3`.
-    pub fn new(x: f64, y: f64, z: f64) -> Vec3 {
-        Vec3 { x: x, y: y, z: z }
+    pub fn new<I: Into<f64>>(x: I, y: I, z: I) -> Vec3 {
+        Vec3 { x: x.into(), y: y.into(), z: z.into() }
     }
     /// Constructs a new `Vec3` from spherical coordinates $(r, \theta, \phi)$.
-    pub fn from_spherical(r: f64, theta: f64, phi: f64) -> Vec3 {
+    pub fn from_spherical<I: Into<f64>>(r: I, theta: I, phi: I) -> Vec3 {
+        let (r, theta, phi) = (r.into(), theta.into(), phi.into());
         Vec3::new(r * f64::sin(theta) * f64::cos(phi),
                   r * f64::sin(theta) * f64::sin(phi),
                   r * f64::cos(theta))
@@ -60,9 +61,9 @@ impl Vec3 {
     /// ```
     /// use linal::Vec3;
     ///
-    /// let a1 = Vec3::new(2.0, 0.0, 0.0);
-    /// let a2 = Vec3::new(3.0, 4.0, 0.0);
-    /// let a3 = Vec3::new(3.0, 4.0, 5.0);
+    /// let a1 = Vec3::new(2, 0, 0);
+    /// let a2 = Vec3::new(3, 4, 0);
+    /// let a3 = Vec3::new(3, 4, 5);
     ///
     /// let (b1, b2, b3) = Vec3::dual_basis((a1, a2, a3));
     /// assert_eq!(b1, Vec3::new(0.5, -0.375, 0.0));
@@ -104,18 +105,20 @@ impl Mul for Vec3 {
     }
 }
 
-impl Mul<f64> for Vec3 {
+impl<I: Into<f64>> Mul<I> for Vec3 {
     type Output = Self;
 
-    fn mul(self, _rhs: f64) -> Vec3 {
+    fn mul(self, _rhs: I) -> Vec3 {
+        let _rhs = _rhs.into();
         Vec3::new(self.x * _rhs, self.y * _rhs, self.z * _rhs)
     }
 }
 
-impl Div<f64> for Vec3 {
+impl<I: Into<f64>> Div<I> for Vec3 {
     type Output = Self;
 
-    fn div(self, _rhs: f64) -> Vec3 {
+    fn div(self, _rhs: I) -> Vec3 {
+        let _rhs = _rhs.into();
         if _rhs == 0.0 {
             panic!("Can't divide by zero!");
         }
@@ -171,47 +174,47 @@ mod linal_test {
 
     #[test]
     fn vec3_mul() {
-        let a = Vec3::new(1.0, 2.0, 3.0);
-        let b = Vec3::new(3.0, 6.0, 9.0);
-        let r = a * 3.0;
+        let a = Vec3::new(1, 2, 3);
+        let b = Vec3::new(3, 6, 9);
+        let r = a * 3;
         assert_eq!(r, b);
     }
 
     #[test]
     #[should_panic]
     fn vec3_div() {
-        let a = Vec3::new(1.0, 2.0, 3.0);
-        let _ = a / 0.0;
+        let a = Vec3::new(1, 2, 3);
+        let _ = a / 0;
     }
 
     #[test]
     fn vec3_from_spherical() {
         use std::f64::consts::PI;
         let a = Vec3::from_spherical(5.0, PI / 2.0, 3f64.atan2(4.0));
-        let b = Vec3::new(4.0, 3.0, 0.0);
+        let b = Vec3::new(4, 3, 0);
         assert!((a - b).len() < 1e-10);
     }
 
     #[test]
     fn vec3_add() {
-        let a = Vec3::new(1.0, 2.0, 3.0);
-        let b = Vec3::new(-3.0, 6.0, 4.0);
-        let c = Vec3::new(-2.0, 8.0, 7.0);
+        let a = Vec3::new(1, 2, 3);
+        let b = Vec3::new(-3, 6, 4);
+        let c = Vec3::new(-2, 8, 7);
         assert_eq!(a + b, c);
     }
 
     #[test]
     fn vec3_sub() {
-        let a = Vec3::new(1.0, 2.0, 3.0);
-        let b = Vec3::new(-3.0, 6.0, 4.0);
-        let c = Vec3::new(4.0, -4.0, -1.0);
+        let a = Vec3::new(1, 2, 3);
+        let b = Vec3::new(-3, 6, 4);
+        let c = Vec3::new(4, -4, -1);
         assert_eq!(a - b, c);
     }
 
     #[test]
     fn vec3_dot() {
-        let a = Vec3::new(1.0, 2.0, 3.0);
-        let b = Vec3::new(-3.0, 6.0, 4.0);
+        let a = Vec3::new(1, 2, 3);
+        let b = Vec3::new(-3, 6, 4);
         let c = 21.0;
         assert_eq!(a.dot(b), c);
         assert_eq!(b.dot(a), c);
@@ -219,23 +222,23 @@ mod linal_test {
 
     #[test]
     fn vec3_cross() {
-        let a = Vec3::new(4.0, 0.0, 0.0);
-        let b = Vec3::new(3.0, 5.0, 0.0);
-        let c = Vec3::new(0.0, 0.0, 20.0);
+        let a = Vec3::new(4, 0, 0);
+        let b = Vec3::new(3, 5, 0);
+        let c = Vec3::new(0, 0, 20);
         assert_eq!(a.cross(b), c);
         assert_eq!(b.cross(a), -c);
     }
 
     #[test]
     fn vec3_neg() {
-        let a = Vec3::new(1.0, 2.0, 3.0);
-        let b = Vec3::new(-1.0, -2.0, -3.0);
+        let a = Vec3::new(1, 2, 3);
+        let b = Vec3::new(-1, -2, -3);
         assert_eq!(-a, b);
     }
 
     #[test]
     fn vec3_parse() {
         let a: Vec3 = "1 2 3".parse().unwrap();
-        assert_eq!(a, Vec3::new(1.0, 2.0, 3.0));
+        assert_eq!(a, Vec3::new(1, 2, 3));
     }
 }
