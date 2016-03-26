@@ -4,6 +4,8 @@
 [![Build Status](https://travis-ci.org/pinecrew/linal.svg?branch=master)](https://travis-ci.org/pinecrew/linal)
 [![linal at crates.io](https://img.shields.io/crates/v/linal.svg)](https://crates.io/linal)
 
+| [Documentation](https://pinecrew.github.io/linal/linal/) | [Examples](./examples) |
+
 linear algebra library for Rust
 
 ### Status
