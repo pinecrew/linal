@@ -3,18 +3,18 @@ use linal::{Vec3, Cross};
 
 fn main() {
     // initialize three dimension vector
-    let a = Vec3::new(2.00, 4.0, 8.0);
-    let b = Vec3::new(3.15, 3.0, 3.3);
+    let a = Vec3::new(2, 4, 8);
+    let b = Vec3::new(3.15, 3, 3.3);
     // addition
     println!("({}) + ({}) = ({})", a, b, a + b);
     // substraction
     println!("({}) - ({}) = ({})", b, a, b - a);
-    let (k, n) = (3.4, 8.0);
+    let (k, n) = (3.4, 8);
     // multiplication by a constant
     println!("({}) * {} = ({})", a, k, a * k);
     // division by a constant
     println!("({}) / {} = ({})", b, n, b / n);
-    let (r, theta, phi) = (2.0, 1.57, 3.14);
+    let (r, theta, phi) = (2, 1.57, 3.14);
     // initialize zero vector
     println!("Vec3::zero() = ({})", Vec3::zero());
     // transformation from the polar coordinate system
@@ -24,9 +24,9 @@ fn main() {
              phi,
              Vec3::from_spherical(r, theta, phi));
     // construct dual basis
-    let a1 = Vec3::new(2.0, 0.0, 0.0);
-    let a2 = Vec3::new(3.0, 4.0, 0.0);
-    let a3 = Vec3::new(3.0, 4.0, 5.0);
+    let a1 = Vec3::new(2, 0, 0);
+    let a2 = Vec3::new(3, 4, 0);
+    let a3 = Vec3::new(3, 4, 5);
     let (b1, b2, b3) = Vec3::dual_basis((a1, a2, a3));
     println!("dual_basis(({}), ({}), ({})) = (({}), ({}), ({}))",
              a1,

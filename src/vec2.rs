@@ -57,8 +57,8 @@ impl Vec2 {
     /// ```
     /// use linal::Vec2;
     ///
-    /// let a1 = Vec2::new(2.0, 0.0);
-    /// let a2 = Vec2::new(3.0, 4.0);
+    /// let a1 = Vec2::new(2, 0);
+    /// let a2 = Vec2::new(3, 4);
     ///
     /// let (b1, b2) = Vec2::dual_basis((a1, a2));
     /// assert_eq!(b1, Vec2::new(0.5, -0.375));

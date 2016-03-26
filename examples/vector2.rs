@@ -3,18 +3,18 @@ use linal::{Vec2, Cross};
 
 fn main() {
     // initialize two dimension vector
-    let a = Vec2::new(2.00, 4.00);
-    let b = Vec2::new(3.15, 3.00);
+    let a = Vec2::new(2, 4);
+    let b = Vec2::new(3.15, 3);
     // addition
     println!("({}) + ({}) = ({})", a, b, a + b);
     // substraction
     println!("({}) - ({}) = ({})", b, a, b - a);
-    let (k, n) = (3.4, 8.0);
+    let (k, n) = (3.4, 8);
     // multiplication by a constant
     println!("({}) * {} = ({})", a, k, a * k);
     // division by a constant
     println!("({}) / {} = ({})", b, n, b / n);
-    let (r, theta) = (2.0, 3.14);
+    let (r, theta) = (2, 3.14);
     // initialize zero vector
     println!("Vec2::zero() = ({})", Vec2::zero());
     // transformation from the polar coordinate system
@@ -23,8 +23,8 @@ fn main() {
              theta,
              Vec2::from_polar(r, theta));
     // construct dual basis
-    let a1 = Vec2::new(2.0, 0.0);
-    let a2 = Vec2::new(3.0, 4.0);
+    let a1 = Vec2::new(2, 0);
+    let a2 = Vec2::new(3, 4);
     let (b1, b2) = Vec2::dual_basis((a1, a2));
     println!("dual_basis(({}), ({})) = (({}), ({}))", a1, a2, b1, b2);
     // scalar product
