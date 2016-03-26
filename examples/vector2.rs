@@ -4,17 +4,17 @@ use linal::{Vec2, Cross};
 fn main() {
     // initialize two dimension vector
     let a = Vec2::new(2, 4);
-    let b = Vec2::new(3.15, 3);
+    let b = Vec2::new(3.15, 3.0);
     // addition
     println!("({}) + ({}) = ({})", a, b, a + b);
     // substraction
     println!("({}) - ({}) = ({})", b, a, b - a);
-    let (k, n) = (3.4, 8);
+    let (k, n) = (3.4, 8.0);
     // multiplication by a constant
     println!("({}) * {} = ({})", a, k, a * k);
     // division by a constant
     println!("({}) / {} = ({})", b, n, b / n);
-    let (r, theta) = (2, 3.14);
+    let (r, theta) = (2.0, 3.14);
     // initialize zero vector
     println!("Vec2::zero() = ({})", Vec2::zero());
     // transformation from the polar coordinate system

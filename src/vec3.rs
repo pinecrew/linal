@@ -66,9 +66,9 @@ impl Vec3 {
     /// let a3 = Vec3::new(3, 4, 5);
     ///
     /// let (b1, b2, b3) = Vec3::dual_basis((a1, a2, a3));
-    /// assert_eq!(b1, Vec3::new(0.5, -0.375, 0));
-    /// assert_eq!(b2, Vec3::new(0, 0.25, -0.2));
-    /// assert_eq!(b3, Vec3::new(0, 0, 0.2));
+    /// assert_eq!(b1, Vec3::new(0.5, -0.375, 0.0));
+    /// assert_eq!(b2, Vec3::new(0.0, 0.25, -0.2));
+    /// assert_eq!(b3, Vec3::new(0.0, 0.0, 0.2));
     /// ```
     pub fn dual_basis(basis: (Vec3, Vec3, Vec3)) -> (Vec3, Vec3, Vec3) {
         let (a, b, c) = basis;

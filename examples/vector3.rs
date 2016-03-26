@@ -4,17 +4,17 @@ use linal::{Vec3, Cross};
 fn main() {
     // initialize three dimension vector
     let a = Vec3::new(2, 4, 8);
-    let b = Vec3::new(3.15, 3, 3.3);
+    let b = Vec3::new(3.15, 3.0, 3.3);
     // addition
     println!("({}) + ({}) = ({})", a, b, a + b);
     // substraction
     println!("({}) - ({}) = ({})", b, a, b - a);
-    let (k, n) = (3.4, 8);
+    let (k, n) = (3.4, 8.0);
     // multiplication by a constant
     println!("({}) * {} = ({})", a, k, a * k);
     // division by a constant
     println!("({}) / {} = ({})", b, n, b / n);
-    let (r, theta, phi) = (2, 1.57, 3.14);
+    let (r, theta, phi) = (2.0, 1.57, 3.14);
     // initialize zero vector
     println!("Vec3::zero() = ({})", Vec3::zero());
     // transformation from the polar coordinate system

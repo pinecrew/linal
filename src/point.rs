@@ -46,7 +46,7 @@ impl Point {
     /// // create a zero `Point`
     /// let a = Point::zero();
     /// // create b `Point`
-    /// let b = Point::new(0.0, 0.0);
+    /// let b = Point::new(0, 0);
     /// // a == b
     /// assert_eq!(a, b)
     /// ```
@@ -124,38 +124,38 @@ mod linal_test {
 
     #[test]
     fn point_vec2_add() {
-        let a = Point::new(1.0, 2.0);
-        let b = Vec2::new(-3.0, 6.0);
-        let c = Point::new(-2.0, 8.0);
+        let a = Point::new(1, 2);
+        let b = Vec2::new(-3, 6);
+        let c = Point::new(-2, 8);
         assert_eq!(a + b, c);
     }
 
     #[test]
     fn point_vec2_sub() {
-        let a = Point::new(1.0, 2.0);
-        let b = Vec2::new(-3.0, 6.0);
-        let c = Point::new(4.0, -4.0);
+        let a = Point::new(1, 2);
+        let b = Vec2::new(-3, 6);
+        let c = Point::new(4, -4);
         assert_eq!(a - b, c);
     }
 
     #[test]
     fn point_sub() {
-        let a = Point::new(1.0, 2.0);
-        let b = Point::new(-3.0, 6.0);
-        let c = Vec2::new(4.0, -4.0);
+        let a = Point::new(1, 2);
+        let b = Point::new(-3, 6);
+        let c = Vec2::new(4, -4);
         assert_eq!(a - b, c);
     }
 
     #[test]
     fn point_neg() {
-        let a = Point::new(1.0, 2.0);
-        let b = Point::new(-1.0, -2.0);
+        let a = Point::new(1, 2);
+        let b = Point::new(-1, -2);
         assert_eq!(-a, b);
     }
 
     #[test]
     fn point_parse() {
         let a: Point = "1 2".parse().unwrap();
-        assert_eq!(a, Point::new(1.0, 2.0));
+        assert_eq!(a, Point::new(1, 2));
     }
 }
