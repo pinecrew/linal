@@ -3,7 +3,6 @@ use std::cmp::PartialEq;
 use std::str::FromStr;
 use std::fmt;
 use std::num;
-use traits::Cross;
 
 /// 2D vector in cartesian coordinates
 #[derive(Debug, Clone, Copy)]
@@ -17,7 +16,10 @@ pub struct Vec2 {
 impl Vec2 {
     /// Constructs a new `Vec2`.
     pub fn new<I: Into<f64>>(x: I, y: I) -> Vec2 {
-        Vec2 { x: x.into(), y: y.into() }
+        Vec2 {
+            x: x.into(),
+            y: y.into(),
+        }
     }
     /// Constructs a new `Vec2` from polar coordinates $(r, \theta)$.
     pub fn from_polar<I: Into<f64>>(r: I, theta: I) -> Vec2 {
@@ -31,6 +33,14 @@ impl Vec2 {
     /// Scalar product
     pub fn dot(self, rhs: Vec2) -> f64 {
         self.x * rhs.x + self.y * rhs.y
+    }
+    /// Orthogonal vector
+    pub fn cross(self) -> Vec2 {
+        Vec2::new(self.y, -self.x)
+    }
+    /// Area of parallelogramm
+    pub fn area(self, rhs: Vec2) -> f64 {
+        self.dot(rhs.cross())
     }
     /// Vector length
     pub fn len(self) -> f64 {
@@ -139,22 +149,6 @@ impl PartialEq for Vec2 {
     }
 }
 
-impl<I: Into<f64>> Cross<I> for Vec2 {
-    type Output = Self;
-
-    fn cross(self, rhs: I) -> Self {
-        Self::new(self.y, -self.x) * rhs.into()
-    }
-}
-
-impl Cross for Vec2 {
-    type Output = f64;
-
-    fn cross(self, rhs: Vec2) -> f64 {
-        self.x * rhs.y - self.y * rhs.x
-    }
-}
-
 impl fmt::Display for Vec2 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{} {}", self.x, self.y)
@@ -174,7 +168,6 @@ impl FromStr for Vec2 {
 #[cfg(test)]
 mod linal_test {
     use super::*;
-    use traits::Cross;
 
     #[test]
     fn vec2_mul() {
@@ -224,12 +217,12 @@ mod linal_test {
     }
 
     #[test]
-    fn vec2_cross() {
+    fn vec2_area() {
         let a = Vec2::new(1, 2);
         let b = Vec2::new(-3, 6);
         let c = 12.0;
-        assert_eq!(a.cross(b), c);
-        assert_eq!(b.cross(a), -c);
+        assert_eq!(a.area(b), c);
+        assert_eq!(b.area(a), -c);
     }
 
     #[test]
@@ -237,7 +230,7 @@ mod linal_test {
         let a = Vec2::new(1, 2);
         let b = 2.0;
         let c = Vec2::new(4, -2);
-        assert_eq!(a.cross(b), c);
+        assert_eq!(a.cross() * b, c);
     }
 
     #[test]

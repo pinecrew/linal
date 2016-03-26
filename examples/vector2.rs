@@ -1,5 +1,5 @@
 extern crate linal;
-use linal::{Vec2, Cross};
+use linal::Vec2;
 
 fn main() {
     // initialize two dimension vector
@@ -30,9 +30,9 @@ fn main() {
     // scalar product
     println!("<({}), ({})> = {}", a, b, a.dot(b));
     // cross product
-    println!("({}).cross({}) = {}", a, b, a.cross(b));
+    println!("({}).area({}) = {}", a, b, a.area(b));
     // cross product with orthogonal vector
-    println!("({}).cross({}) = ({})", a, k, a.cross(k));
+    println!("({}).cross() * {} = ({})", a, k, a.cross() * k);
     // vector length
     println!("({}).len() = {}", a, a.len());
     // unary vector, co-directed with given
