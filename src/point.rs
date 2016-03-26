@@ -28,11 +28,12 @@ impl Point {
     /// // return: a = 1.5 3.4
     /// println!("a = {}", a);
     /// ```
-    pub fn new(x: f64, y: f64) -> Point {
-        Point { x: x, y: y }
+    pub fn new<I: Into<f64>>(x: I, y: I) -> Point {
+        Point { x: x.into(), y: y.into() }
     }
     /// Constructs a new `Point` from polar coordinates $(r, \theta)$.
-    pub fn from_polar(r: f64, theta: f64) -> Point {
+    pub fn from_polar<I: Into<f64>>(r: I, theta: I) -> Point {
+        let (r, theta) = (r.into(), theta.into());
         Point::new(r * f64::cos(theta), r * f64::sin(theta))
     }
     /// Constructs a zero `Point`

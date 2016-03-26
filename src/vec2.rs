@@ -16,11 +16,12 @@ pub struct Vec2 {
 
 impl Vec2 {
     /// Constructs a new `Vec2`.
-    pub fn new(x: f64, y: f64) -> Vec2 {
-        Vec2 { x: x, y: y }
+    pub fn new<I: Into<f64>>(x: I, y: I) -> Vec2 {
+        Vec2 { x: x.into(), y: y.into() }
     }
     /// Constructs a new `Vec2` from polar coordinates $(r, \theta)$.
-    pub fn from_polar(r: f64, theta: f64) -> Vec2 {
+    pub fn from_polar<I: Into<f64>>(r: I, theta: I) -> Vec2 {
+        let (r, theta) = (r.into(), theta.into());
         Vec2::new(r * f64::cos(theta), r * f64::sin(theta))
     }
     /// Create a zero `Vec2`
@@ -103,18 +104,20 @@ impl Mul for Vec2 {
     }
 }
 
-impl Mul<f64> for Vec2 {
+impl<I: Into<f64>> Mul<I> for Vec2 {
     type Output = Self;
 
-    fn mul(self, _rhs: f64) -> Vec2 {
+    fn mul(self, _rhs: I) -> Vec2 {
+        let _rhs = _rhs.into();
         Vec2::new(self.x * _rhs, self.y * _rhs)
     }
 }
 
-impl Div<f64> for Vec2 {
+impl<I: Into<f64>> Div<I> for Vec2 {
     type Output = Self;
 
-    fn div(self, _rhs: f64) -> Vec2 {
+    fn div(self, _rhs: I) -> Vec2 {
+        let _rhs = _rhs.into();
         if _rhs == 0.0 {
             panic!("Can't divide by zero!");
         }
@@ -136,11 +139,11 @@ impl PartialEq for Vec2 {
     }
 }
 
-impl Cross<f64> for Vec2 {
+impl<I: Into<f64>> Cross<I> for Vec2 {
     type Output = Self;
 
-    fn cross(self, rhs: f64) -> Self {
-        Self::new(self.y, -self.x) * rhs
+    fn cross(self, rhs: I) -> Self {
+        Self::new(self.y, -self.x) * rhs.into()
     }
 }
 
@@ -175,46 +178,46 @@ mod linal_test {
 
     #[test]
     fn vec2_mul() {
-        let a = Vec2::new(1.0, 2.0);
-        let b = Vec2::new(3.0, 6.0);
-        let r = a * 3.0;
+        let a = Vec2::new(1, 2);
+        let b = Vec2::new(3, 6);
+        let r = a * 3;
         assert_eq!(r, b);
     }
 
     #[test]
     #[should_panic]
     fn vec2_div() {
-        let a = Vec2::new(1.0, 2.0);
+        let a = Vec2::new(1, 2);
         let _ = a / 0.0;
     }
 
     #[test]
     fn vec2_from_polar() {
-        let a = Vec2::new(3.0, 4.0);
+        let a = Vec2::new(3, 4);
         let b = Vec2::from_polar(5.0, f64::atan2(4.0, 3.0));
         assert!((a - b).len() < 1e-10);
     }
 
     #[test]
     fn vec2_add() {
-        let a = Vec2::new(1.0, 2.0);
-        let b = Vec2::new(-3.0, 6.0);
-        let c = Vec2::new(-2.0, 8.0);
+        let a = Vec2::new(1, 2);
+        let b = Vec2::new(-3, 6);
+        let c = Vec2::new(-2, 8);
         assert_eq!(a + b, c);
     }
 
     #[test]
     fn vec2_sub() {
-        let a = Vec2::new(1.0, 2.0);
-        let b = Vec2::new(-3.0, 6.0);
-        let c = Vec2::new(4.0, -4.0);
+        let a = Vec2::new(1, 2);
+        let b = Vec2::new(-3, 6);
+        let c = Vec2::new(4, -4);
         assert_eq!(a - b, c);
     }
 
     #[test]
     fn vec2_dot() {
-        let a = Vec2::new(1.0, 2.0);
-        let b = Vec2::new(-3.0, 6.0);
+        let a = Vec2::new(1, 2);
+        let b = Vec2::new(-3, 6);
         let c = 9.0;
         assert_eq!(a.dot(b), c);
         assert_eq!(b.dot(a), c);
@@ -222,8 +225,8 @@ mod linal_test {
 
     #[test]
     fn vec2_cross() {
-        let a = Vec2::new(1.0, 2.0);
-        let b = Vec2::new(-3.0, 6.0);
+        let a = Vec2::new(1, 2);
+        let b = Vec2::new(-3, 6);
         let c = 12.0;
         assert_eq!(a.cross(b), c);
         assert_eq!(b.cross(a), -c);
@@ -231,22 +234,22 @@ mod linal_test {
 
     #[test]
     fn vec2_cross_z() {
-        let a = Vec2::new(1.0, 2.0);
+        let a = Vec2::new(1, 2);
         let b = 2.0;
-        let c = Vec2::new(4.0, -2.0);
+        let c = Vec2::new(4, -2);
         assert_eq!(a.cross(b), c);
     }
 
     #[test]
     fn vec2_neg() {
-        let a = Vec2::new(1.0, 2.0);
-        let b = Vec2::new(-1.0, -2.0);
+        let a = Vec2::new(1, 2);
+        let b = Vec2::new(-1, -2);
         assert_eq!(-a, b);
     }
 
     #[test]
     fn vec2_parse() {
         let a: Vec2 = "1 2".parse().unwrap();
-        assert_eq!(a, Vec2::new(1.0, 2.0));
+        assert_eq!(a, Vec2::new(1, 2));
     }
 }
