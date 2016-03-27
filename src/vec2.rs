@@ -60,8 +60,8 @@ impl Vec2 {
     }
     /// Constructs dual basis for given.
     ///
-    /// Dual basis $(b_1, b_2)$ for basis $(a_1, a_2)$ satisfies relation
-    /// $$a_i \cdot b_j = \delta_{ij}$$
+    /// Dual basis $(\vec{b}_1, \vec{b}_2)$ for basis $(\vec{a}_1, \vec{a}_2)$ satisfies relation
+    /// $$\vec{a}_i \cdot \vec{b}_j = \delta_{ij}$$
     ///
     /// # Example
     /// ```
@@ -76,17 +76,8 @@ impl Vec2 {
     /// ```
     pub fn dual_basis(basis: (Vec2, Vec2)) -> (Vec2, Vec2) {
         let (a, b) = basis;
-
-        // At first, construct vectors a1 and b1 such that
-        // a1.dot(b) = 0 и b1.dot(a) = 0
-        let a1 = a - b * a.dot(b) / b.dot(b);
-        let b1 = b - a * b.dot(a) / a.dot(a);
-
-        // And second, normalize them
-        let a2 = a1 / a.dot(a1);
-        let b2 = b1 / b.dot(b1);
-
-        (a2, b2)
+        let area = a.area(b);
+        (b.cross() / area, -a.cross() / area)
     }
 }
 
