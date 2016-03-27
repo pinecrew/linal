@@ -8,5 +8,12 @@
 
 linear algebra library for Rust
 
+### Usage
+Add `linal` to your `Cargo.toml`, for example:
+```
+[dependencies]
+linal = "0.2"
+```
+
 ### Status
-* WIP
+WIP
