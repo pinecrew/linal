@@ -10,3 +10,6 @@
 * Remove `Point`
 * Remove `Cross` trait, use `cross` and `area` methods for `Vec2` and `cross` for `Vec3`
 * Use `Into<f64>` trait instead `f64`
+
+# Version 0.2.1
+* Added more examples in documentation
