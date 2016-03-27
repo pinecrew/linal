@@ -16,6 +16,17 @@ pub struct Vec2 {
 
 impl Vec2 {
     /// Constructs a new `Vec2`.
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec2;
+    ///
+    /// // create `Vec2` with int
+    /// let a = Vec2::new(10, 20);
+    /// // create `Vec2` with float
+    /// let b = Vec2::new(3.5, 2.5);
+    /// // Supported types implemented for trait Into (with convertion to f64)
+    /// ```
     pub fn new<I: Into<f64>>(x: I, y: I) -> Vec2 {
         Vec2 {
             x: x.into(),
@@ -23,39 +34,158 @@ impl Vec2 {
         }
     }
     /// Constructs a new `Vec2` from polar coordinates $(r, \theta)$.
+    ///
+    /// # Example
+    /// ```
+    /// use std::f64::consts::PI;
+    /// use linal::Vec2;
+    ///
+    /// // calculation error
+    /// let eps = 1E-15;
+    /// // Create `Vec2` use polar coordinates
+    /// let v = Vec2::from_polar(2.0, PI / 2.0);
+    /// assert!(v.x < eps && v.y - 2.0 < eps);
+    /// ```
     pub fn from_polar<I: Into<f64>>(r: I, theta: I) -> Vec2 {
         let (r, theta) = (r.into(), theta.into());
         Vec2::new(r * f64::cos(theta), r * f64::sin(theta))
     }
     /// Create a zero `Vec2`
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec2;
+    ///
+    /// // create zero `Vec2`
+    /// let zero = Vec2::zero();
+    /// assert_eq!(zero, Vec2::new(0, 0));
+    /// ```
     pub fn zero() -> Vec2 {
         Vec2::new(0.0, 0.0)
     }
     /// Scalar product
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec2;
+    ///
+    /// let a = Vec2::new(1, 2);
+    /// let b = Vec2::new(3, 4);
+    /// // The scalar production of `a` by `b`
+    /// let r = a.dot(b);
+    /// assert_eq!(r, 11.0);
+    /// ```
     pub fn dot(self, rhs: Vec2) -> f64 {
         self.x * rhs.x + self.y * rhs.y
     }
     /// Orthogonal vector
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec2;
+    ///
+    /// let a = Vec2::new(2, 2);
+    /// let b = Vec2::new(2, -2);
+    /// // create orthogonal vector with same length
+    /// // rotated in clockwise direction
+    /// //             y ^
+    /// //               |
+    /// //               |
+    /// //             2 - ...... /a
+    /// //               |     //  :
+    /// //             1 -   //    :
+    /// //    -2   -1    | //      :
+    /// //  -- | -- | -- 0 -- | -- | ---->
+    /// //               | \\   1  : 2     x
+    /// //               - -1\\    :
+    /// //               |     \\  :
+    /// //               - -2.....\b
+    /// let c = a.cross();
+    /// assert_eq!(b, c);
+    /// ```
     pub fn cross(self) -> Vec2 {
         Vec2::new(self.y, -self.x)
     }
     /// Area of parallelogramm
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec2;
+    ///
+    /// let a = Vec2::new(2, 0);
+    /// let b = Vec2::new(1, 2);
+    /// // Calculate the area of the parallelogram formed by the vectors
+    /// // y ^
+    /// //   |
+    /// //   |
+    /// // 2 -    b .........
+    /// //   |   /#########/
+    /// // 1 -  /#  area #/
+    /// //   | /#########/ 
+    /// //   0 -- | -- a ---->
+    /// //        1    2     x
+    /// let area = a.area(b);
+    /// assert_eq!(area, 4.0);
+    /// ```
     pub fn area(self, rhs: Vec2) -> f64 {
         self.dot(rhs.cross())
     }
     /// Vector length
+    /// 
+    /// # Example
+    /// ```
+    /// use linal::Vec2;
+    ///
+    /// let vec = Vec2::new(2, 0);
+    /// // Calculate vector length
+    /// let len1 = vec.len();
+    /// let len2 = (-vec.cross()).len();
+    /// assert!(len1 == len2 && len1 == 2.0);
+    /// ```
     pub fn len(self) -> f64 {
         self.dot(self).sqrt()
     }
     /// Unary vector, co-directed with given
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec2;
+    ///
+    /// let a = Vec2::new(2, 0);
+    /// // Calculate unary vector from `a`
+    /// let b = a.ort();
+    /// assert_eq!(b, Vec2::new(1, 0));
+    /// ```
     pub fn ort(self) -> Vec2 {
         self / self.len()
     }
     /// Squares of the vector coordinates
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec2;
+    ///
+    /// let a = Vec2::new(2, 3);
+    /// let b = Vec2::new(4, 9);
+    /// // Calculate squre of `a`
+    /// let c = a.sqr();
+    /// assert_eq!(b, c);
+    /// ```
     pub fn sqr(self) -> Vec2 {
         self * self
     }
     /// Square root of vector coordinates
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec2;
+    /// 
+    /// let a = Vec2::new(2, 3);
+    /// let b = Vec2::new(4, 9);
+    /// // Calculate squre root of `b`
+    /// let c = b.sqrt();
+    /// assert_eq!(a, c);
+    /// ```
     pub fn sqrt(self) -> Vec2 {
         Vec2::new(self.x.sqrt(), self.y.sqrt())
     }

@@ -18,6 +18,17 @@ pub struct Vec3 {
 
 impl Vec3 {
     /// Constructs a new `Vec3`.
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec3;
+    ///
+    /// // create `Vec3` with int
+    /// let a = Vec3::new(10, 20, 30);
+    /// // create `Vec3` with float
+    /// let b = Vec3::new(3.5, 2.5, 1.5);
+    /// // Supported types implemented for trait Into (with convertion to f64)
+    /// ```
     pub fn new<I: Into<f64>>(x: I, y: I, z: I) -> Vec3 {
         Vec3 {
             x: x.into(),
@@ -26,6 +37,18 @@ impl Vec3 {
         }
     }
     /// Constructs a new `Vec3` from spherical coordinates $(r, \theta, \phi)$.
+    ///
+    /// # Example
+    /// ```
+    /// use std::f64::consts::PI;
+    /// use linal::Vec3;
+    ///
+    /// // calculation error
+    /// let eps = 1E-15;
+    /// // Create `Vec3` use spherical coordinates
+    /// let v = Vec3::from_spherical(2.0, PI / 2.0, PI / 2.0);
+    /// assert!(v.x < eps && v.y - 2.0 < eps && v.z < eps);
+    /// ```
     pub fn from_spherical<I: Into<f64>>(r: I, theta: I, phi: I) -> Vec3 {
         let (r, theta, phi) = (r.into(), theta.into(), phi.into());
         Vec3::new(r * f64::sin(theta) * f64::cos(phi),
@@ -33,32 +56,110 @@ impl Vec3 {
                   r * f64::cos(theta))
     }
     /// Create a zero `Vec3`
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec3;
+    ///
+    /// // create zero `Vec3`
+    /// let zero = Vec3::zero();
+    /// assert_eq!(zero, Vec3::new(0, 0, 0));
+    /// ```
     pub fn zero() -> Vec3 {
         Vec3::new(0.0, 0.0, 0.0)
     }
     /// Scalar product
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec3;
+    ///
+    /// let a = Vec3::new(1, 2, 3);
+    /// let b = Vec3::new(4, 5, 6);
+    /// // The scalar production of `a` by `b`
+    /// let r = a.dot(b);
+    /// assert_eq!(r, 32.0);
+    /// ```
     pub fn dot(self, rhs: Vec3) -> f64 {
         self.x * rhs.x + self.y * rhs.y + self.z * rhs.z
     }
     /// Cross product
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec3;
+    ///
+    /// let a = Vec3::new(1, 2, 3);
+    /// let b = Vec3::new(2, 4, 6);
+    /// let c = Vec3::zero();
+    /// // Calculate cross production of `a` and `b` vectors
+    /// let d = a.cross(b);
+    /// assert_eq!(c, d);
+    /// ```
     pub fn cross(self, rhs: Vec3) -> Self {
         Self::new(self.y * rhs.z - self.z * rhs.y,
                   self.z * rhs.x - self.x * rhs.z,
                   self.x * rhs.y - self.y * rhs.x)
     }
     /// Vector length
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec3;
+    ///
+    /// let a = Vec3::new(4, 0, 0);
+    /// let e = Vec3::new(0, 0, 1);
+    /// let b = a.cross(e);
+    /// // Calculate vector length
+    /// let len1 = a.len();
+    /// let len2 = b.len();
+    /// assert!(a != b);
+    /// assert!(len1 == len2 && len1 == 4.0);
+    /// ```
     pub fn len(self) -> f64 {
         self.dot(self).sqrt()
     }
     /// Unary vector, co-directed with given
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec3;
+    ///
+    /// let a = Vec3::new(2, 0, 0);
+    /// // Calculate unary vector from `a`
+    /// let b = a.ort();
+    /// assert_eq!(b, Vec3::new(1, 0, 0));
+    /// ```
     pub fn ort(self) -> Vec3 {
         self / self.len()
     }
     /// Squares of the vector coordinates
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec3;
+    ///
+    /// let a = Vec3::new(2, 3, 4);
+    /// let b = Vec3::new(4, 9, 16);
+    /// // Calculate squre of `a`
+    /// let c = a.sqr();
+    /// assert_eq!(b, c);
+    /// ```
     pub fn sqr(self) -> Vec3 {
         self * self
     }
     /// Square root of vector coordinates
+    ///
+    /// # Example
+    /// ```
+    /// use linal::Vec3;
+    ///
+    /// let a = Vec3::new(2, 3, 4);
+    /// let b = Vec3::new(4, 9, 16);
+    /// // Calculate squre root of `b`
+    /// let c = b.sqrt();
+    /// assert_eq!(a, c);
+    /// ```
     pub fn sqrt(self) -> Vec3 {
         Vec3::new(self.x.sqrt(), self.y.sqrt(), self.z.sqrt())
     }
