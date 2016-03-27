@@ -86,7 +86,8 @@ impl Vec2 {
     ///
     /// let a = Vec2::new(2, 2);
     /// let b = Vec2::new(2, -2);
-    /// // create orthogonal vector
+    /// // create orthogonal vector with same length
+    /// // rotated in clockwise direction
     /// //             y ^
     /// //               |
     /// //               |
@@ -95,10 +96,10 @@ impl Vec2 {
     /// //             1 -   //    :
     /// //    -2   -1    | //      :
     /// //  -- | -- | -- 0 -- | -- | ---->
-    /// //     :      // |    1    2     x
-    /// //     :    //   - -1
-    /// //     :  //     |
-    /// //     b/ ...... - -2
+    /// //               | \\   1  : 2     x
+    /// //               - -1\\    :
+    /// //               |     \\  :
+    /// //               - -2.....\b
     /// let c = a.cross();
     /// assert_eq!(b, c);
     /// ```
@@ -112,15 +113,15 @@ impl Vec2 {
     /// use linal::Vec2;
     ///
     /// let a = Vec2::new(2, 0);
-    /// let b = Vec2::new(0, 2);
+    /// let b = Vec2::new(1, 2);
     /// // Calculate the area of the parallelogram formed by the vectors
     /// // y ^
     /// //   |
     /// //   |
-    /// // 2 b .........
-    /// //   |         :
-    /// // 1 -         :
-    /// //   |         :
+    /// // 2 -    b .........
+    /// //   |   /#########/
+    /// // 1 -  /#  area #/
+    /// //   | /#########/ 
     /// //   0 -- | -- a ---->
     /// //        1    2     x
     /// let area = a.area(b);
