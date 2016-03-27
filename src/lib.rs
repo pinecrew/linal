@@ -1,4 +1,4 @@
-//! Simple library to work with 2D vectors and points
+//! Small and simple library to work with 2D and 3D vectors
 #![warn(missing_docs)]
 
 pub mod vec2;

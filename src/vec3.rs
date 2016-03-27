@@ -1,3 +1,4 @@
+//! Vectors in 3-dimensional euclidian space.
 use std::ops::{Add, Sub, Mul, Div, Neg};
 use std::cmp::PartialEq;
 use std::str::FromStr;
@@ -63,8 +64,8 @@ impl Vec3 {
     }
     /// Constructs dual basis for given.
     ///
-    /// Dual basis $(b_1, b_2)$ for basis $(a_1, a_2)$ satisfies relation
-    /// $$a_i \cdot b_j = \delta_{ij}$$
+    /// Dual basis $(\vec{b}_1, \vec{b}_2, \vec{b}_3)$ for basis $(\vec{a}_1, \vec{a}_2, \vec{a}_3)$ satisfies relation
+    /// $$\vec{a}_i \cdot \vec{b}_j = \delta_{ij}$$
     ///
     /// # Example
     /// ```

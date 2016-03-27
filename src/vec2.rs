@@ -1,3 +1,4 @@
+//! Vectors on a plane.
 use std::ops::{Add, Sub, Mul, Div, Neg};
 use std::cmp::PartialEq;
 use std::str::FromStr;
