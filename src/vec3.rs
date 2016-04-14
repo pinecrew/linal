@@ -1,5 +1,6 @@
 //! Vectors in 3-dimensional euclidian space.
 use std::ops::{Add, Sub, Mul, Div, Neg};
+use std::ops::{AddAssign, SubAssign, DivAssign, MulAssign};
 use std::cmp::PartialEq;
 use std::str::FromStr;
 use std::fmt;
@@ -237,6 +238,48 @@ impl<I: Into<f64>> Div<I> for Vec3 {
     }
 }
 
+impl AddAssign for Vec3 {
+    fn add_assign(&mut self, other: Vec3) {
+        self.x += other.x;
+        self.y += other.y;
+        self.z += other.z;
+    }
+}
+
+impl SubAssign for Vec3 {
+    fn sub_assign(&mut self, other: Vec3) {
+        self.x -= other.x;
+        self.y -= other.y;
+        self.z -= other.z;
+    }
+}
+
+impl MulAssign for Vec3 {
+    fn mul_assign(&mut self, other: Vec3) {
+        self.x *= other.x;
+        self.y *= other.y;
+        self.z *= other.z;
+    }
+}
+
+impl<I: Into<f64>> MulAssign<I> for Vec3 {
+    fn mul_assign(&mut self, other: I) {
+        let k = other.into();
+        self.x *= k;
+        self.y *= k;
+        self.z *= k;
+    }
+}
+
+impl<I: Into<f64>> DivAssign<I> for Vec3 {
+    fn div_assign(&mut self, other: I) {
+        let k = other.into();
+        self.x /= k;
+        self.y /= k;
+        self.z /= k;
+    }
+}
+
 impl Neg for Vec3 {
     type Output = Self;
 
@@ -277,12 +320,28 @@ mod linal_test {
         let a = Vec3::new(1, 2, 3);
         let b = Vec3::new(3, 6, 9);
         let r = a * 3;
+        let mut z = a;
+        let mut x = a;
+        z *= 3;
+        x *= b;
         assert_eq!(r, b);
+        assert_eq!(z, b);
+        assert_eq!(x, Vec3::new(3, 12, 27));
+    }
+
+    #[test]
+    fn vec3_div() {
+        let a = Vec3::new(10, 20, 30);
+        let b = Vec3::new(1, 2, 3);
+        let mut z = a;
+        z /= 10;
+        assert_eq!(a / 10, b);
+        assert_eq!(z, b);
     }
 
     #[test]
     #[should_panic]
-    fn vec3_div() {
+    fn vec3_div_panic() {
         let a = Vec3::new(1, 2, 3);
         let _ = a / 0;
     }
@@ -300,7 +359,10 @@ mod linal_test {
         let a = Vec3::new(1, 2, 3);
         let b = Vec3::new(-3, 6, 4);
         let c = Vec3::new(-2, 8, 7);
+        let mut z = a;
+        z += b;
         assert_eq!(a + b, c);
+        assert_eq!(z, c);
     }
 
     #[test]
@@ -308,7 +370,10 @@ mod linal_test {
         let a = Vec3::new(1, 2, 3);
         let b = Vec3::new(-3, 6, 4);
         let c = Vec3::new(4, -4, -1);
+        let mut z = a;
+        z -= b;
         assert_eq!(a - b, c);
+        assert_eq!(z, c);
     }
 
     #[test]

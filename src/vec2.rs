@@ -1,5 +1,6 @@
 //! Vectors on a plane.
 use std::ops::{Add, Sub, Mul, Div, Neg};
+use std::ops::{AddAssign, SubAssign, MulAssign, DivAssign};
 use std::cmp::PartialEq;
 use std::str::FromStr;
 use std::fmt;
@@ -265,6 +266,43 @@ impl Neg for Vec2 {
     }
 }
 
+impl AddAssign for Vec2 {
+    fn add_assign(&mut self, other: Vec2) {
+        self.x += other.x;
+        self.y += other.y;
+    }
+}
+
+impl SubAssign for Vec2 {
+    fn sub_assign(&mut self, other: Vec2) {
+        self.x -= other.x;
+        self.y -= other.y;
+    }
+}
+
+impl MulAssign for Vec2 {
+    fn mul_assign(&mut self, other: Vec2) {
+        self.x *= other.x;
+        self.y *= other.y;
+    }
+}
+
+impl<I: Into<f64>> MulAssign<I> for Vec2 {
+    fn mul_assign(&mut self, other: I) {
+        let k = other.into();
+        self.x *= k;
+        self.y *= k;
+    }
+}
+
+impl<I: Into<f64>> DivAssign<I> for Vec2 {
+    fn div_assign(&mut self, other: I) {
+        let k = other.into();
+        self.x /= k;
+        self.y /= k;
+    }
+}
+
 impl PartialEq for Vec2 {
     fn eq(&self, other: &Self) -> bool {
         self.x == other.x && self.y == other.y
@@ -296,12 +334,28 @@ mod linal_test {
         let a = Vec2::new(1, 2);
         let b = Vec2::new(3, 6);
         let r = a * 3;
+        let mut z = a;
+        let mut x = a;
+        z *= 3;
+        x *= b;
         assert_eq!(r, b);
+        assert_eq!(z, b);
+        assert_eq!(x, Vec2::new(3, 12));
+    }
+
+    #[test]
+    fn vec2_div() {
+        let a = Vec2::new(10, 20);
+        let b = Vec2::new(1, 2);
+        let mut z = a;
+        z /= 10;
+        assert_eq!(a / 10, b);
+        assert_eq!(z, b);
     }
 
     #[test]
     #[should_panic]
-    fn vec2_div() {
+    fn vec2_div_panic() {
         let a = Vec2::new(1, 2);
         let _ = a / 0.0;
     }
@@ -318,7 +372,10 @@ mod linal_test {
         let a = Vec2::new(1, 2);
         let b = Vec2::new(-3, 6);
         let c = Vec2::new(-2, 8);
+        let mut z = a;
         assert_eq!(a + b, c);
+        z += b;
+        assert_eq!(z, c);
     }
 
     #[test]
@@ -326,7 +383,10 @@ mod linal_test {
         let a = Vec2::new(1, 2);
         let b = Vec2::new(-3, 6);
         let c = Vec2::new(4, -4);
+        let mut z = a;
+        z -= b;
         assert_eq!(a - b, c);
+        assert_eq!(z, c);
     }
 
     #[test]
