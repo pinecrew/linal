@@ -216,45 +216,45 @@ impl Vec2 {
 impl Add for Vec2 {
     type Output = Self;
 
-    fn add(self, _rhs: Self) -> Self {
-        Vec2::new(self.x + _rhs.x, self.y + _rhs.y)
+    fn add(mut self, _rhs: Self) -> Self {
+        self += _rhs;
+        self
     }
 }
 
 impl Sub for Vec2 {
     type Output = Self;
 
-    fn sub(self, _rhs: Self) -> Self {
-        Vec2::new(self.x - _rhs.x, self.y - _rhs.y)
+    fn sub(mut self, _rhs: Self) -> Self {
+        self -= _rhs;
+        self
     }
 }
 
 impl Mul for Vec2 {
     type Output = Self;
 
-    fn mul(self, _rhs: Vec2) -> Vec2 {
-        Vec2::new(self.x * _rhs.x, self.y * _rhs.y)
+    fn mul(mut self, _rhs: Vec2) -> Vec2 {
+        self *= _rhs;
+        self
     }
 }
 
 impl<I: Into<f64>> Mul<I> for Vec2 {
     type Output = Self;
 
-    fn mul(self, _rhs: I) -> Vec2 {
-        let _rhs = _rhs.into();
-        Vec2::new(self.x * _rhs, self.y * _rhs)
+    fn mul(mut self, _rhs: I) -> Vec2 {
+        self *= _rhs;
+        self
     }
 }
 
 impl<I: Into<f64>> Div<I> for Vec2 {
     type Output = Self;
 
-    fn div(self, _rhs: I) -> Vec2 {
-        let _rhs = _rhs.into();
-        if _rhs == 0.0 {
-            panic!("Can't divide by zero!");
-        }
-        Vec2::new(self.x / _rhs, self.y / _rhs)
+    fn div(mut self, _rhs: I) -> Vec2 {
+        self /= _rhs;
+        self
     }
 }
 
@@ -354,10 +354,10 @@ mod linal_test {
     }
 
     #[test]
-    #[should_panic]
     fn vec2_div_panic() {
         let a = Vec2::new(1, 2);
-        let _ = a / 0.0;
+        let b = a / 0.0;
+        assert!(b.x.is_infinite(), b.y.is_infinite());
     }
 
     #[test]
@@ -372,8 +372,9 @@ mod linal_test {
         let a = Vec2::new(1, 2);
         let b = Vec2::new(-3, 6);
         let c = Vec2::new(-2, 8);
-        let mut z = a;
         assert_eq!(a + b, c);
+
+        let mut z = a;
         z += b;
         assert_eq!(z, c);
     }
