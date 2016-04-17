@@ -12,4 +12,5 @@
 * Use `Into<f64>` trait instead `f64`
 
 # Version 0.2.1
-* Added more examples in documentation
+* Add more examples in documentation
+* Add OpAssign traits for vectors (rust 1.8)
