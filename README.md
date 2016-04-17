@@ -14,6 +14,3 @@ Add `linal` to your `Cargo.toml`, for example:
 [dependencies]
 linal = "0.2"
 ```
-
-### Status
-WIP

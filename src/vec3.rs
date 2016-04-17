@@ -1,5 +1,6 @@
 //! Vectors in 3-dimensional euclidian space.
 use std::ops::{Add, Sub, Mul, Div, Neg};
+use std::ops::{AddAssign, SubAssign, DivAssign, MulAssign};
 use std::cmp::PartialEq;
 use std::str::FromStr;
 use std::fmt;
@@ -195,45 +196,87 @@ impl Vec3 {
 impl Add for Vec3 {
     type Output = Self;
 
-    fn add(self, _rhs: Self) -> Self {
-        Vec3::new(self.x + _rhs.x, self.y + _rhs.y, self.z + _rhs.z)
+    fn add(mut self, _rhs: Self) -> Self {
+        self += _rhs;
+        self
     }
 }
 
 impl Sub for Vec3 {
     type Output = Self;
 
-    fn sub(self, _rhs: Self) -> Self {
-        Vec3::new(self.x - _rhs.x, self.y - _rhs.y, self.z - _rhs.z)
+    fn sub(mut self, _rhs: Self) -> Self {
+        self -= _rhs;
+        self
     }
 }
 
 impl Mul for Vec3 {
     type Output = Self;
 
-    fn mul(self, _rhs: Vec3) -> Vec3 {
-        Vec3::new(self.x * _rhs.x, self.y * _rhs.y, self.z * _rhs.z)
+    fn mul(mut self, _rhs: Vec3) -> Vec3 {
+        self *= _rhs;
+        self
     }
 }
 
 impl<I: Into<f64>> Mul<I> for Vec3 {
     type Output = Self;
 
-    fn mul(self, _rhs: I) -> Vec3 {
-        let _rhs = _rhs.into();
-        Vec3::new(self.x * _rhs, self.y * _rhs, self.z * _rhs)
+    fn mul(mut self, _rhs: I) -> Vec3 {
+        self *= _rhs;
+        self
     }
 }
 
 impl<I: Into<f64>> Div<I> for Vec3 {
     type Output = Self;
 
-    fn div(self, _rhs: I) -> Vec3 {
-        let _rhs = _rhs.into();
-        if _rhs == 0.0 {
-            panic!("Can't divide by zero!");
-        }
-        Vec3::new(self.x / _rhs, self.y / _rhs, self.z / _rhs)
+    fn div(mut self, _rhs: I) -> Vec3 {
+        self /= _rhs;
+        self
+    }
+}
+
+impl AddAssign for Vec3 {
+    fn add_assign(&mut self, other: Vec3) {
+        self.x += other.x;
+        self.y += other.y;
+        self.z += other.z;
+    }
+}
+
+impl SubAssign for Vec3 {
+    fn sub_assign(&mut self, other: Vec3) {
+        self.x -= other.x;
+        self.y -= other.y;
+        self.z -= other.z;
+    }
+}
+
+impl MulAssign for Vec3 {
+    fn mul_assign(&mut self, other: Vec3) {
+        self.x *= other.x;
+        self.y *= other.y;
+        self.z *= other.z;
+    }
+}
+
+impl<I: Into<f64>> MulAssign<I> for Vec3 {
+    fn mul_assign(&mut self, other: I) {
+        let k = other.into();
+        self.x *= k;
+        self.y *= k;
+        self.z *= k;
+    }
+}
+
+impl<I: Into<f64>> DivAssign<I> for Vec3 {
+    fn div_assign(&mut self, other: I) {
+        let k = other.into();
+        self.x /= k;
+        self.y /= k;
+        self.z /= k;
     }
 }
 
@@ -277,14 +320,30 @@ mod linal_test {
         let a = Vec3::new(1, 2, 3);
         let b = Vec3::new(3, 6, 9);
         let r = a * 3;
+        let mut z = a;
+        let mut x = a;
+        z *= 3;
+        x *= b;
         assert_eq!(r, b);
+        assert_eq!(z, b);
+        assert_eq!(x, Vec3::new(3, 12, 27));
     }
 
     #[test]
-    #[should_panic]
     fn vec3_div() {
+        let a = Vec3::new(10, 20, 30);
+        let b = Vec3::new(1, 2, 3);
+        let mut z = a;
+        z /= 10;
+        assert_eq!(a / 10, b);
+        assert_eq!(z, b);
+    }
+
+    #[test]
+    fn vec3_div_inf() {
         let a = Vec3::new(1, 2, 3);
-        let _ = a / 0;
+        let b = a / 0;
+        assert!(b.x.is_infinite() && b.y.is_infinite() && b.z.is_infinite());
     }
 
     #[test]
@@ -300,7 +359,10 @@ mod linal_test {
         let a = Vec3::new(1, 2, 3);
         let b = Vec3::new(-3, 6, 4);
         let c = Vec3::new(-2, 8, 7);
+        let mut z = a;
+        z += b;
         assert_eq!(a + b, c);
+        assert_eq!(z, c);
     }
 
     #[test]
@@ -308,7 +370,10 @@ mod linal_test {
         let a = Vec3::new(1, 2, 3);
         let b = Vec3::new(-3, 6, 4);
         let c = Vec3::new(4, -4, -1);
+        let mut z = a;
+        z -= b;
         assert_eq!(a - b, c);
+        assert_eq!(z, c);
     }
 
     #[test]

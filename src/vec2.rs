@@ -1,5 +1,6 @@
 //! Vectors on a plane.
 use std::ops::{Add, Sub, Mul, Div, Neg};
+use std::ops::{AddAssign, SubAssign, MulAssign, DivAssign};
 use std::cmp::PartialEq;
 use std::str::FromStr;
 use std::fmt;
@@ -215,45 +216,45 @@ impl Vec2 {
 impl Add for Vec2 {
     type Output = Self;
 
-    fn add(self, _rhs: Self) -> Self {
-        Vec2::new(self.x + _rhs.x, self.y + _rhs.y)
+    fn add(mut self, _rhs: Self) -> Self {
+        self += _rhs;
+        self
     }
 }
 
 impl Sub for Vec2 {
     type Output = Self;
 
-    fn sub(self, _rhs: Self) -> Self {
-        Vec2::new(self.x - _rhs.x, self.y - _rhs.y)
+    fn sub(mut self, _rhs: Self) -> Self {
+        self -= _rhs;
+        self
     }
 }
 
 impl Mul for Vec2 {
     type Output = Self;
 
-    fn mul(self, _rhs: Vec2) -> Vec2 {
-        Vec2::new(self.x * _rhs.x, self.y * _rhs.y)
+    fn mul(mut self, _rhs: Vec2) -> Vec2 {
+        self *= _rhs;
+        self
     }
 }
 
 impl<I: Into<f64>> Mul<I> for Vec2 {
     type Output = Self;
 
-    fn mul(self, _rhs: I) -> Vec2 {
-        let _rhs = _rhs.into();
-        Vec2::new(self.x * _rhs, self.y * _rhs)
+    fn mul(mut self, _rhs: I) -> Vec2 {
+        self *= _rhs;
+        self
     }
 }
 
 impl<I: Into<f64>> Div<I> for Vec2 {
     type Output = Self;
 
-    fn div(self, _rhs: I) -> Vec2 {
-        let _rhs = _rhs.into();
-        if _rhs == 0.0 {
-            panic!("Can't divide by zero!");
-        }
-        Vec2::new(self.x / _rhs, self.y / _rhs)
+    fn div(mut self, _rhs: I) -> Vec2 {
+        self /= _rhs;
+        self
     }
 }
 
@@ -262,6 +263,43 @@ impl Neg for Vec2 {
 
     fn neg(self) -> Self {
         Self::new(-self.x, -self.y)
+    }
+}
+
+impl AddAssign for Vec2 {
+    fn add_assign(&mut self, other: Vec2) {
+        self.x += other.x;
+        self.y += other.y;
+    }
+}
+
+impl SubAssign for Vec2 {
+    fn sub_assign(&mut self, other: Vec2) {
+        self.x -= other.x;
+        self.y -= other.y;
+    }
+}
+
+impl MulAssign for Vec2 {
+    fn mul_assign(&mut self, other: Vec2) {
+        self.x *= other.x;
+        self.y *= other.y;
+    }
+}
+
+impl<I: Into<f64>> MulAssign<I> for Vec2 {
+    fn mul_assign(&mut self, other: I) {
+        let k = other.into();
+        self.x *= k;
+        self.y *= k;
+    }
+}
+
+impl<I: Into<f64>> DivAssign<I> for Vec2 {
+    fn div_assign(&mut self, other: I) {
+        let k = other.into();
+        self.x /= k;
+        self.y /= k;
     }
 }
 
@@ -296,14 +334,30 @@ mod linal_test {
         let a = Vec2::new(1, 2);
         let b = Vec2::new(3, 6);
         let r = a * 3;
+        let mut z = a;
+        let mut x = a;
+        z *= 3;
+        x *= b;
         assert_eq!(r, b);
+        assert_eq!(z, b);
+        assert_eq!(x, Vec2::new(3, 12));
     }
 
     #[test]
-    #[should_panic]
     fn vec2_div() {
+        let a = Vec2::new(10, 20);
+        let b = Vec2::new(1, 2);
+        let mut z = a;
+        z /= 10;
+        assert_eq!(a / 10, b);
+        assert_eq!(z, b);
+    }
+
+    #[test]
+    fn vec2_div_inf() {
         let a = Vec2::new(1, 2);
-        let _ = a / 0.0;
+        let b = a / 0.0;
+        assert!(b.x.is_infinite() && b.y.is_infinite());
     }
 
     #[test]
@@ -319,6 +373,10 @@ mod linal_test {
         let b = Vec2::new(-3, 6);
         let c = Vec2::new(-2, 8);
         assert_eq!(a + b, c);
+
+        let mut z = a;
+        z += b;
+        assert_eq!(z, c);
     }
 
     #[test]
@@ -326,7 +384,10 @@ mod linal_test {
         let a = Vec2::new(1, 2);
         let b = Vec2::new(-3, 6);
         let c = Vec2::new(4, -4);
+        let mut z = a;
+        z -= b;
         assert_eq!(a - b, c);
+        assert_eq!(z, c);
     }
 
     #[test]
