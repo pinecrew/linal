@@ -7,6 +7,3 @@
 | [Documentation](https://pinecrew.github.io/linal/linal/) | [Examples](./examples) |
 
 linear algebra library for Rust
-
-### Status
-* WIP
