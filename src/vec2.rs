@@ -354,10 +354,10 @@ mod linal_test {
     }
 
     #[test]
-    fn vec2_div_panic() {
+    fn vec2_div_inf() {
         let a = Vec2::new(1, 2);
         let b = a / 0.0;
-        assert!(b.x.is_infinite(), b.y.is_infinite());
+        assert!(b.x.is_infinite() && b.y.is_infinite());
     }
 
     #[test]

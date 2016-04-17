@@ -340,10 +340,10 @@ mod linal_test {
     }
 
     #[test]
-    // #[should_panic]
-    fn vec3_div_panic() {
+    fn vec3_div_inf() {
         let a = Vec3::new(1, 2, 3);
-        let _ = a / 0;
+        let b = a / 0;
+        assert!(b.x.is_infinite() && b.y.is_infinite() && b.z.is_infinite());
     }
 
     #[test]
