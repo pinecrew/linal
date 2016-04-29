@@ -14,3 +14,9 @@ Add `linal` to your `Cargo.toml`, for example:
 [dependencies]
 linal = "0.2"
 ```
+
+Or use last changes:
+```
+[dependencies]
+linal = { git = "https://github.com/pinecrew/linal" }
+```

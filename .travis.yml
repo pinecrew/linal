@@ -6,6 +6,4 @@ script:
     cargo build --verbose
     cargo doc
 after_success: sh scripts/travis-doc-upload.sh
-cache:
- directories:
-  - $HOME/.cargo
+cache: cargo
