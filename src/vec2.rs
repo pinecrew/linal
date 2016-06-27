@@ -1,6 +1,7 @@
 //! Vectors on a plane.
 use std::ops::{Add, Sub, Mul, Div, Neg};
 use std::ops::{AddAssign, SubAssign, MulAssign, DivAssign};
+use std::ops::{Index, IndexMut};
 use std::cmp::PartialEq;
 use std::str::FromStr;
 use std::fmt;
@@ -303,6 +304,28 @@ impl<I: Into<f64>> DivAssign<I> for Vec2 {
     }
 }
 
+impl Index<usize> for Vec2 {
+    type Output = f64;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        match index {
+            0 => &self.x,
+            1 => &self.y,
+            i => panic!("Index {} out of [0, 1] range", i)
+        }
+    }
+}
+
+impl IndexMut<usize> for Vec2 {
+    fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+        match index {
+            0 => &mut self.x,
+            1 => &mut self.y,
+            i => panic!("Index {} out of [0, 1] range", i)
+        }
+    }
+}
+
 impl PartialEq for Vec2 {
     fn eq(&self, other: &Self) -> bool {
         self.x == other.x && self.y == other.y
@@ -421,6 +444,37 @@ mod linal_test {
         let a = Vec2::new(1, 2);
         let b = Vec2::new(-1, -2);
         assert_eq!(-a, b);
+    }
+
+    #[test]
+    fn vec2_index() {
+        let a = Vec2::new(1, 2);
+        assert_eq!(a[0], 1.0);
+        assert_eq!(a[1], 2.0);
+    }
+
+    #[test]
+    #[should_panic]
+    fn vec2_index_out_of_range() {
+        let a = Vec2::new(1, 2);
+        let _ = a[10];
+    }
+
+    #[test]
+    fn vec2_index_mut() {
+        let mut a = Vec2::zero();
+        for i in 0..2 {
+            a[i] = (i as f64 + 1.0).powi(2);
+        }
+        assert_eq!(a[0], 1.0);
+        assert_eq!(a[1], 4.0);
+    }
+
+    #[test]
+    #[should_panic]
+    fn vec2_index_mut_out_of_range() {
+        let mut a = Vec2::zero();
+        a[10] = 10.0;
     }
 
     #[test]
