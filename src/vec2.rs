@@ -342,8 +342,8 @@ impl FromStr for Vec2 {
     type Err = num::ParseFloatError;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let words: Vec<&str> = s.split_whitespace().collect();
-        let x: f64 = try!(words[0].parse());
-        let y: f64 = try!(words[1].parse());
+        let x: f64 = words[0].parse()?;
+        let y: f64 = words[1].parse()?;
         Ok(Self::new(x, y))
     }
 }
