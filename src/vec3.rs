@@ -1,6 +1,7 @@
 //! Vectors in 3-dimensional euclidian space.
 use std::ops::{Add, Sub, Mul, Div, Neg};
 use std::ops::{AddAssign, SubAssign, DivAssign, MulAssign};
+use std::ops::{Index, IndexMut};
 use std::cmp::PartialEq;
 use std::str::FromStr;
 use std::fmt;
@@ -288,6 +289,30 @@ impl Neg for Vec3 {
     }
 }
 
+impl Index<usize> for Vec3 {
+    type Output = f64;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        match index {
+            0 => &self.x,
+            1 => &self.y,
+            2 => &self.z,
+            i => panic!("Index {} out of [0, 2] range", i)
+        }
+    }
+}
+
+impl IndexMut<usize> for Vec3 {
+    fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+        match index {
+            0 => &mut self.x,
+            1 => &mut self.y,
+            2 => &mut self.z,
+            i => panic!("Index {} out of [0, 2] range", i)
+        }
+    }
+}
+
 impl PartialEq for Vec3 {
     fn eq(&self, other: &Self) -> bool {
         self.x == other.x && self.y == other.y && self.z == other.z
@@ -304,9 +329,9 @@ impl FromStr for Vec3 {
     type Err = num::ParseFloatError;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let words: Vec<&str> = s.split_whitespace().collect();
-        let x: f64 = try!(words[0].parse());
-        let y: f64 = try!(words[1].parse());
-        let z: f64 = try!(words[2].parse());
+        let x: f64 = words[0].parse()?;
+        let y: f64 = words[1].parse()?;
+        let z: f64 = words[2].parse()?;
         Ok(Self::new(x, y, z))
     }
 }
@@ -399,6 +424,39 @@ mod linal_test {
         let a = Vec3::new(1, 2, 3);
         let b = Vec3::new(-1, -2, -3);
         assert_eq!(-a, b);
+    }
+
+    #[test]
+    fn vec3_index() {
+        let a = Vec3::new(1, 2, 3);
+        assert_eq!(a[0], 1.0);
+        assert_eq!(a[1], 2.0);
+        assert_eq!(a[2], 3.0);
+    }
+
+    #[test]
+    #[should_panic]
+    fn vec3_index_out_of_range() {
+        let a = Vec3::new(1, 2, 3);
+        let _ = a[10];
+    }
+
+    #[test]
+    fn vec3_index_mut() {
+        let mut a = Vec3::zero();
+        for i in 0..3 {
+            a[i] = (i as f64 + 1.0).powi(2);
+        }
+        assert_eq!(a[0], 1.0);
+        assert_eq!(a[1], 4.0);
+        assert_eq!(a[2], 9.0);
+    }
+
+    #[test]
+    #[should_panic]
+    fn vec3_index_mut_out_of_range() {
+        let mut a = Vec3::zero();
+        a[10] = 10.0;
     }
 
     #[test]
