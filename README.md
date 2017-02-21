@@ -16,7 +16,7 @@ linal = "0.2"
 ```
 
 Or use the latest version from this repo:
-```
+```toml
 [dependencies]
 linal = { git = "https://github.com/pinecrew/linal" }
 ```
