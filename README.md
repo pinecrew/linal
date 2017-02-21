@@ -10,7 +10,7 @@ linear algebra library for Rust
 
 ### Usage
 Add `linal` to your `Cargo.toml`, for example:
-```
+```toml
 [dependencies]
 linal = "0.2"
 ```
