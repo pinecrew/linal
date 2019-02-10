@@ -191,95 +191,21 @@ impl Vec3 {
          c.cross(a) / triple_prod,
          a.cross(b) / triple_prod)
     }
+
+    // need for op_default & op_assign
+    fn size(&self) -> usize { 3 }
 }
 
-
-impl Add for Vec3 {
-    type Output = Self;
-
-    fn add(mut self, _rhs: Self) -> Self {
-        self += _rhs;
-        self
-    }
-}
-
-impl Sub for Vec3 {
-    type Output = Self;
-
-    fn sub(mut self, _rhs: Self) -> Self {
-        self -= _rhs;
-        self
-    }
-}
-
-impl Mul for Vec3 {
-    type Output = Self;
-
-    fn mul(mut self, _rhs: Vec3) -> Vec3 {
-        self *= _rhs;
-        self
-    }
-}
-
-impl<I: Into<f64>> Mul<I> for Vec3 {
-    type Output = Self;
-
-    fn mul(mut self, _rhs: I) -> Vec3 {
-        self *= _rhs;
-        self
-    }
-}
-
-impl<I: Into<f64>> Div<I> for Vec3 {
-    type Output = Self;
-
-    fn div(mut self, _rhs: I) -> Vec3 {
-        self /= _rhs;
-        self
-    }
-}
-
-impl AddAssign for Vec3 {
-    fn add_assign(&mut self, other: Vec3) {
-        self.x += other.x;
-        self.y += other.y;
-        self.z += other.z;
-    }
-}
-
-impl SubAssign for Vec3 {
-    fn sub_assign(&mut self, other: Vec3) {
-        self.x -= other.x;
-        self.y -= other.y;
-        self.z -= other.z;
-    }
-}
-
-impl MulAssign for Vec3 {
-    fn mul_assign(&mut self, other: Vec3) {
-        self.x *= other.x;
-        self.y *= other.y;
-        self.z *= other.z;
-    }
-}
-
-impl<I: Into<f64>> MulAssign<I> for Vec3 {
-    fn mul_assign(&mut self, other: I) {
-        let k = other.into();
-        self.x *= k;
-        self.y *= k;
-        self.z *= k;
-    }
-}
-
-impl<I: Into<f64>> DivAssign<I> for Vec3 {
-    fn div_assign(&mut self, other: I) {
-        let k = other.into();
-        self.x /= k;
-        self.y /= k;
-        self.z /= k;
-    }
-}
+op_default!(add, Add, +=, Vec3);
+op_default!(sub, Sub, -=, Vec3);
+op_default!(mul, Mul, *=, Vec3);
+op_default!(f64, mul, Mul, *=, Vec3);
+op_default!(f64, div, Div, /=, Vec3);
+op_assign!(add_assign, AddAssign, +=, Vec3);
+op_assign!(sub_assign, SubAssign, -=, Vec3);
+op_assign!(mul_assign, MulAssign, *=, Vec3);
+op_assign!(f64, mul_assign, MulAssign, *=, Vec3);
+op_assign!(f64, div_assign, DivAssign, /=, Vec3);
 
 impl Neg for Vec3 {
     type Output = Self;

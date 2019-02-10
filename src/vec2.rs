@@ -169,7 +169,7 @@ impl Vec2 {
     ///
     /// let a = Vec2::new(2, 3);
     /// let b = Vec2::new(4, 9);
-    /// // Calculate squre of `a`
+    /// // Calculate square of `a`
     /// let c = a.sqr();
     /// assert_eq!(b, c);
     /// ```
@@ -212,95 +212,27 @@ impl Vec2 {
         let area = a.area(b);
         (b.cross() / area, -a.cross() / area)
     }
+
+    // need for op_default & op_assign
+    fn size(&self) -> usize { 2 }
 }
 
-impl Add for Vec2 {
-    type Output = Self;
-
-    fn add(mut self, _rhs: Self) -> Self {
-        self += _rhs;
-        self
-    }
-}
-
-impl Sub for Vec2 {
-    type Output = Self;
-
-    fn sub(mut self, _rhs: Self) -> Self {
-        self -= _rhs;
-        self
-    }
-}
-
-impl Mul for Vec2 {
-    type Output = Self;
-
-    fn mul(mut self, _rhs: Vec2) -> Vec2 {
-        self *= _rhs;
-        self
-    }
-}
-
-impl<I: Into<f64>> Mul<I> for Vec2 {
-    type Output = Self;
-
-    fn mul(mut self, _rhs: I) -> Vec2 {
-        self *= _rhs;
-        self
-    }
-}
-
-impl<I: Into<f64>> Div<I> for Vec2 {
-    type Output = Self;
-
-    fn div(mut self, _rhs: I) -> Vec2 {
-        self /= _rhs;
-        self
-    }
-}
+op_default!(add, Add, +=, Vec2);
+op_default!(sub, Sub, -=, Vec2);
+op_default!(mul, Mul, *=, Vec2);
+op_default!(f64, mul, Mul, *=, Vec2);
+op_default!(f64, div, Div, /=, Vec2);
+op_assign!(add_assign, AddAssign, +=, Vec2);
+op_assign!(sub_assign, SubAssign, -=, Vec2);
+op_assign!(mul_assign, MulAssign, *=, Vec2);
+op_assign!(f64, mul_assign, MulAssign, *=, Vec2);
+op_assign!(f64, div_assign, DivAssign, /=, Vec2);
 
 impl Neg for Vec2 {
     type Output = Self;
 
     fn neg(self) -> Self {
         Self::new(-self.x, -self.y)
-    }
-}
-
-impl AddAssign for Vec2 {
-    fn add_assign(&mut self, other: Vec2) {
-        self.x += other.x;
-        self.y += other.y;
-    }
-}
-
-impl SubAssign for Vec2 {
-    fn sub_assign(&mut self, other: Vec2) {
-        self.x -= other.x;
-        self.y -= other.y;
-    }
-}
-
-impl MulAssign for Vec2 {
-    fn mul_assign(&mut self, other: Vec2) {
-        self.x *= other.x;
-        self.y *= other.y;
-    }
-}
-
-impl<I: Into<f64>> MulAssign<I> for Vec2 {
-    fn mul_assign(&mut self, other: I) {
-        let k = other.into();
-        self.x *= k;
-        self.y *= k;
-    }
-}
-
-impl<I: Into<f64>> DivAssign<I> for Vec2 {
-    fn div_assign(&mut self, other: I) {
-        let k = other.into();
-        self.x /= k;
-        self.y /= k;
     }
 }
 
