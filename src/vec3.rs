@@ -23,8 +23,7 @@ impl Vec3 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec3;
-    ///
+    /// # use linal::Vec3;
     /// // create `Vec3` with int
     /// let a = Vec3::new(10, 20, 30);
     /// // create `Vec3` with float
@@ -42,9 +41,8 @@ impl Vec3 {
     ///
     /// # Example
     /// ```
-    /// use std::f64::consts::PI;
-    /// use linal::Vec3;
-    ///
+    /// # use std::f64::consts::PI;
+    /// # use linal::Vec3;
     /// // calculation error
     /// let eps = 1E-15;
     /// // Create `Vec3` use spherical coordinates
@@ -61,8 +59,7 @@ impl Vec3 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec3;
-    ///
+    /// # use linal::Vec3;
     /// // create zero `Vec3`
     /// let zero = Vec3::zero();
     /// assert_eq!(zero, Vec3::new(0, 0, 0));
@@ -74,8 +71,7 @@ impl Vec3 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec3;
-    ///
+    /// # use linal::Vec3;
     /// let a = Vec3::new(1, 2, 3);
     /// let b = Vec3::new(4, 5, 6);
     /// // The scalar production of `a` by `b`
@@ -89,8 +85,7 @@ impl Vec3 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec3;
-    ///
+    /// # use linal::Vec3;
     /// let a = Vec3::new(1, 2, 3);
     /// let b = Vec3::new(2, 4, 6);
     /// let c = Vec3::zero();
@@ -107,8 +102,7 @@ impl Vec3 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec3;
-    ///
+    /// # use linal::Vec3;
     /// let a = Vec3::new(4, 0, 0);
     /// let e = Vec3::new(0, 0, 1);
     /// let b = a.cross(e);
@@ -125,8 +119,7 @@ impl Vec3 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec3;
-    ///
+    /// # use linal::Vec3;
     /// let a = Vec3::new(2, 0, 0);
     /// // Calculate unary vector from `a`
     /// let b = a.ort();
@@ -139,8 +132,7 @@ impl Vec3 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec3;
-    ///
+    /// # use linal::Vec3;
     /// let a = Vec3::new(2, 3, 4);
     /// let b = Vec3::new(4, 9, 16);
     /// // Calculate squre of `a`
@@ -154,8 +146,7 @@ impl Vec3 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec3;
-    ///
+    /// # use linal::Vec3;
     /// let a = Vec3::new(2, 3, 4);
     /// let b = Vec3::new(4, 9, 16);
     /// // Calculate squre root of `b`
@@ -172,8 +163,7 @@ impl Vec3 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec3;
-    ///
+    /// # use linal::Vec3;
     /// let a1 = Vec3::new(2, 0, 0);
     /// let a2 = Vec3::new(3, 4, 0);
     /// let a3 = Vec3::new(3, 4, 5);

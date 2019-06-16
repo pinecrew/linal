@@ -21,8 +21,7 @@ impl Vec2 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec2;
-    ///
+    /// # use linal::Vec2;
     /// // create `Vec2` with int
     /// let a = Vec2::new(10, 20);
     /// // create `Vec2` with float
@@ -39,9 +38,8 @@ impl Vec2 {
     ///
     /// # Example
     /// ```
-    /// use std::f64::consts::PI;
-    /// use linal::Vec2;
-    ///
+    /// # use std::f64::consts::PI;
+    /// # use linal::Vec2;
     /// // calculation error
     /// let eps = 1E-15;
     /// // Create `Vec2` use polar coordinates
@@ -56,8 +54,7 @@ impl Vec2 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec2;
-    ///
+    /// # use linal::Vec2;
     /// // create zero `Vec2`
     /// let zero = Vec2::zero();
     /// assert_eq!(zero, Vec2::new(0, 0));
@@ -69,8 +66,7 @@ impl Vec2 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec2;
-    ///
+    /// # use linal::Vec2;
     /// let a = Vec2::new(1, 2);
     /// let b = Vec2::new(3, 4);
     /// // The scalar production of `a` by `b`
@@ -84,8 +80,7 @@ impl Vec2 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec2;
-    ///
+    /// # use linal::Vec2;
     /// let a = Vec2::new(2, 2);
     /// let b = Vec2::new(2, -2);
     /// // create orthogonal vector with same length
@@ -112,8 +107,7 @@ impl Vec2 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec2;
-    ///
+    /// # use linal::Vec2;
     /// let a = Vec2::new(2, 0);
     /// let b = Vec2::new(1, 2);
     /// // Calculate the area of the parallelogram formed by the vectors
@@ -136,8 +130,7 @@ impl Vec2 {
     /// 
     /// # Example
     /// ```
-    /// use linal::Vec2;
-    ///
+    /// # use linal::Vec2;
     /// let vec = Vec2::new(2, 0);
     /// // Calculate vector length
     /// let len1 = vec.len();
@@ -151,8 +144,7 @@ impl Vec2 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec2;
-    ///
+    /// # use linal::Vec2;
     /// let a = Vec2::new(2, 0);
     /// // Calculate unary vector from `a`
     /// let b = a.ort();
@@ -165,8 +157,7 @@ impl Vec2 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec2;
-    ///
+    /// # use linal::Vec2;
     /// let a = Vec2::new(2, 3);
     /// let b = Vec2::new(4, 9);
     /// // Calculate square of `a`
@@ -180,8 +171,7 @@ impl Vec2 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec2;
-    /// 
+    /// # use linal::Vec2;
     /// let a = Vec2::new(2, 3);
     /// let b = Vec2::new(4, 9);
     /// // Calculate squre root of `b`
@@ -198,8 +188,7 @@ impl Vec2 {
     ///
     /// # Example
     /// ```
-    /// use linal::Vec2;
-    ///
+    /// # use linal::Vec2;
     /// let a1 = Vec2::new(2, 0);
     /// let a2 = Vec2::new(3, 4);
     ///
