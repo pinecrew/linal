@@ -159,7 +159,7 @@ impl Vec3 {
     /// Constructs dual basis for given.
     ///
     /// Dual basis $(\vec{b}_1, \vec{b}_2, \vec{b}_3)$ for basis $(\vec{a}_1, \vec{a}_2, \vec{a}_3)$ satisfies relation
-    /// $$\vec{a}_i \cdot \vec{b}_j = {\delta}_{ij}$$
+    /// $$```\vec{a}_i \cdot \vec{b}_j = \delta_{ij}```$$
     ///
     /// # Example
     /// ```
