@@ -3,7 +3,7 @@
 ![Rust](https://github.com/pinecrew/linal/workflows/Rust/badge.svg)
 [![linal at crates.io](https://img.shields.io/crates/v/linal.svg)](https://crates.io/linal)
 
-| [Documentation](https://pinecrew.github.io/linal/linal/) | [Examples](./examples) |
+| [Documentation](https://docs.rs/linal) | [Examples](./examples) |
 
 linear algebra library for Rust
 
