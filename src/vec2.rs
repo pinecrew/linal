@@ -184,7 +184,7 @@ impl Vec2 {
     /// Constructs dual basis for given.
     ///
     /// Dual basis $(\vec{b}_1, \vec{b}_2)$ for basis $(\vec{a}_1, \vec{a}_2)$ satisfies relation
-    /// $$\vec{a}_i \cdot \vec{b}_j = \delta_{ij}$$
+    /// $$\vec{a}_i \cdot \vec{b}_j = {\delta}_{ij}$$
     ///
     /// # Example
     /// ```
